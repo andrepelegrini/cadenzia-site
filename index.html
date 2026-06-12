@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cadenzia — Liberando tempo para o extraordinário</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --midnight:#002233;
+  --neptune:#11425D;
+  --pacific:#C0D6EA;
+  --grape:#C5C0C9;
+  --cheviot:#F6F2E8;
+  --isotonic:#DDFF55;
+  --text:#1a2e38;
+  --text-soft:#5a6b74;
+  --line:rgba(0,34,51,.10);
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{
+  font-family:'Manrope',sans-serif;
+  background:var(--cheviot);
+  color:var(--text);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--isotonic);color:var(--midnight)}
+a{color:inherit;text-decoration:none}
+img{max-width:100%}
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+
+/* ---------- NAV ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 32px;
+  background:rgba(246,242,232,.72);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid transparent;
+  transition:border-color .4s,background .4s;
+}
+.nav.scrolled{border-bottom-color:var(--line)}
+.brand{font-weight:700;font-size:20px;letter-spacing:-.02em;color:var(--midnight);display:flex;align-items:center;gap:10px}
+.brand .dot{width:9px;height:9px;border-radius:50%;background:var(--isotonic);box-shadow:0 0 0 3px rgba(221,255,85,.25)}
+.nav-links{display:flex;gap:36px;align-items:center}
+.nav-links a{font-size:14.5px;font-weight:500;color:var(--text-soft);transition:color .25s;position:relative}
+.nav-links a:hover{color:var(--midnight)}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:2px;background:var(--isotonic);transition:width .3s var(--ease)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{
+  background:var(--midnight);color:#fff!important;
+  padding:11px 22px;border-radius:100px;font-size:14px;font-weight:600;
+  transition:transform .25s var(--ease),box-shadow .25s;
+}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,34,51,.22)}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:6px}
+.burger span{width:24px;height:2px;background:var(--midnight);transition:.3s}
+
+/* ---------- HERO ---------- */
+.hero{
+  position:relative;
+  background:var(--midnight);
+  color:#fff;
+  padding:170px 0 120px;
+  overflow:hidden;
+}
+.hero-wave{position:absolute;inset:0;width:100%;height:100%;opacity:.55;pointer-events:none}
+.hero-glow{position:absolute;top:-20%;right:-10%;width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(17,66,93,.55),transparent 65%);pointer-events:none}
+.hero .wrap{position:relative;z-index:2}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;
+  font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--pacific);margin-bottom:28px;
+  opacity:0;transform:translateY(14px);animation:rise .8s var(--ease) .1s forwards;
+}
+.eyebrow .pulse{width:7px;height:7px;border-radius:50%;background:var(--isotonic);animation:blink 2.4s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+.hero h1{
+  font-size:clamp(42px,6.2vw,76px);font-weight:800;line-height:1.02;letter-spacing:-.035em;
+  max-width:14ch;margin-bottom:30px;
+}
+.hero h1 .accent{color:var(--isotonic)}
+.hero h1 span{display:inline-block;opacity:0;transform:translateY(26px);animation:rise .9s var(--ease) forwards}
+.hero h1 span:nth-child(1){animation-delay:.15s}
+.hero h1 span:nth-child(2){animation-delay:.27s}
+.hero h1 span:nth-child(3){animation-delay:.39s}
+.hero p.lead{
+  font-size:clamp(17px,2vw,20px);color:#c4d3dc;max-width:46ch;line-height:1.6;margin-bottom:42px;
+  opacity:0;transform:translateY(16px);animation:rise .9s var(--ease) .55s forwards;
+}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;opacity:0;transform:translateY(16px);animation:rise .9s var(--ease) .7s forwards}
+.btn-primary{
+  background:var(--isotonic);color:var(--midnight);
+  padding:15px 30px;border-radius:100px;font-weight:700;font-size:15px;
+  display:inline-flex;align-items:center;gap:10px;
+  transition:transform .25s var(--ease),box-shadow .25s;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(221,255,85,.3)}
+.btn-primary svg{transition:transform .25s var(--ease)}
+.btn-primary:hover svg{transform:translateX(4px)}
+.btn-ghost{
+  border:1px solid rgba(255,255,255,.22);color:#fff;
+  padding:15px 28px;border-radius:100px;font-weight:600;font-size:15px;
+  transition:background .25s,border-color .25s;
+}
+.btn-ghost:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.4)}
+@keyframes rise{to{opacity:1;transform:translateY(0)}}
+
+/* ---------- HERO STATS STRIP ---------- */
+.strip{
+  display:flex;flex-wrap:wrap;gap:40px;margin-top:80px;padding-top:38px;
+  border-top:1px solid rgba(255,255,255,.12);
+  opacity:0;transform:translateY(16px);animation:rise .9s var(--ease) .85s forwards;
+}
+.strip .item .num{font-size:34px;font-weight:800;letter-spacing:-.03em;color:#fff}
+.strip .item .num b{color:var(--isotonic)}
+.strip .item .lbl{font-size:13.5px;color:#9fb3bd;margin-top:4px}
+
+/* ---------- SECTION SHARED ---------- */
+section{position:relative}
+.section-pad{padding:110px 0}
+.sec-eyebrow{
+  font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--neptune);display:flex;align-items:center;gap:12px;margin-bottom:20px;
+}
+.sec-eyebrow::before{content:"";width:28px;height:2px;background:var(--isotonic)}
+.sec-title{font-size:clamp(30px,4vw,46px);font-weight:800;letter-spacing:-.03em;line-height:1.08;color:var(--midnight);max-width:18ch}
+.sec-sub{font-size:17px;color:var(--text-soft);max-width:52ch;margin-top:18px;line-height:1.6}
+
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- SERVICES ---------- */
+#servicos{background:var(--cheviot)}
+.serv-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:60px;flex-wrap:wrap}
+.serv-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.card{
+  background:#fff;border:1px solid var(--line);border-radius:20px;padding:38px 34px;
+  position:relative;overflow:hidden;transition:transform .4s var(--ease),box-shadow .4s,border-color .4s;
+}
+.card::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--isotonic);
+  transform:scaleY(0);transform-origin:top;transition:transform .4s var(--ease);
+}
+.card:hover{transform:translateY(-6px);box-shadow:0 24px 50px rgba(0,34,51,.10);border-color:transparent}
+.card:hover::before{transform:scaleY(1)}
+.card .ico{
+  width:54px;height:54px;border-radius:14px;background:var(--midnight);
+  display:flex;align-items:center;justify-content:center;margin-bottom:24px;transition:background .4s;
+}
+.card:hover .ico{background:var(--neptune)}
+.card .ico svg{stroke:var(--isotonic);width:26px;height:26px;fill:none;stroke-width:1.7}
+.card h3{font-size:21px;font-weight:700;letter-spacing:-.02em;margin-bottom:12px;color:var(--midnight)}
+.card p{font-size:15.5px;color:var(--text-soft);line-height:1.6}
+.card .tag{margin-top:20px;display:inline-block;font-size:12.5px;font-weight:600;color:var(--neptune);
+  background:var(--pacific);padding:5px 13px;border-radius:100px}
+
+/* ---------- RHYTHM / SIGNATURE BAND ---------- */
+.rhythm{background:var(--neptune);color:#fff;padding:90px 0;overflow:hidden;position:relative}
+.rhythm .wrap{position:relative;z-index:2}
+.rhythm h2{font-size:clamp(26px,3.4vw,38px);font-weight:800;letter-spacing:-.03em;max-width:20ch;line-height:1.15}
+.rhythm h2 em{font-style:normal;color:var(--isotonic)}
+.eq{display:flex;align-items:flex-end;gap:7px;height:64px;margin-top:36px}
+.eq span{width:7px;background:var(--pacific);border-radius:4px;animation:bounce 1.4s ease-in-out infinite}
+.eq span:nth-child(odd){background:var(--isotonic)}
+.eq span:nth-child(1){height:30%;animation-delay:0s}
+.eq span:nth-child(2){height:70%;animation-delay:.1s}
+.eq span:nth-child(3){height:45%;animation-delay:.2s}
+.eq span:nth-child(4){height:90%;animation-delay:.3s}
+.eq span:nth-child(5){height:55%;animation-delay:.4s}
+.eq span:nth-child(6){height:75%;animation-delay:.5s}
+.eq span:nth-child(7){height:35%;animation-delay:.6s}
+.eq span:nth-child(8){height:80%;animation-delay:.7s}
+.eq span:nth-child(9){height:50%;animation-delay:.8s}
+.eq span:nth-child(10){height:65%;animation-delay:.9s}
+@keyframes bounce{0%,100%{transform:scaleY(.55)}50%{transform:scaleY(1)}}
+
+/* ---------- SOBRE ---------- */
+#sobre{background:var(--cheviot)}
+.sobre-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+.sobre-visual{
+  aspect-ratio:1/1.05;border-radius:24px;background:var(--midnight);
+  position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;
+}
+.sobre-visual .glyph{font-size:200px;font-weight:800;color:rgba(221,255,85,.10);letter-spacing:-.05em;position:absolute}
+.sobre-visual .floatcard{
+  position:absolute;background:rgba(246,242,232,.96);border-radius:16px;padding:18px 20px;
+  box-shadow:0 18px 40px rgba(0,0,0,.28);
+}
+.sobre-visual .fc1{top:34px;left:34px;animation:floaty 5s ease-in-out infinite}
+.sobre-visual .fc2{bottom:38px;right:34px;animation:floaty 5s ease-in-out infinite .8s}
+.floatcard .fl{font-size:12px;color:var(--text-soft);font-weight:600}
+.floatcard .fv{font-size:22px;font-weight:800;color:var(--midnight);letter-spacing:-.02em}
+.floatcard .fv .up{color:var(--neptune);font-size:14px}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.sobre-text h2{font-size:clamp(28px,3.6vw,42px);font-weight:800;letter-spacing:-.03em;color:var(--midnight);line-height:1.1;margin-bottom:24px}
+.sobre-text p{font-size:16.5px;color:var(--text-soft);line-height:1.7;margin-bottom:18px}
+.sobre-text .sig{margin-top:30px;font-weight:700;color:var(--midnight);font-size:17px}
+.sobre-text .sig small{display:block;font-weight:500;color:var(--text-soft);font-size:14px;margin-top:2px}
+.values{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+.values .v{display:flex;align-items:center;gap:9px;font-size:14.5px;font-weight:600;color:var(--midnight);
+  background:#fff;border:1px solid var(--line);padding:9px 16px;border-radius:100px}
+.values .v i{width:7px;height:7px;border-radius:50%;background:var(--isotonic);display:inline-block}
+
+/* ---------- CONTATO ---------- */
+#contato{background:var(--midnight);color:#fff;overflow:hidden;position:relative}
+.contato-wave{position:absolute;inset:0;opacity:.4;pointer-events:none}
+.contato-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:70px;position:relative;z-index:2}
+.contato-left h2{font-size:clamp(30px,4vw,48px);font-weight:800;letter-spacing:-.03em;line-height:1.08;margin-bottom:22px}
+.contato-left h2 .accent{color:var(--isotonic)}
+.contato-left p{color:#bccbd4;font-size:17px;line-height:1.6;max-width:42ch;margin-bottom:40px}
+.contato-info{display:flex;flex-direction:column;gap:22px}
+.contato-info .row{display:flex;align-items:center;gap:16px}
+.contato-info .ico{width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.07);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.contato-info .ico svg{width:20px;height:20px;stroke:var(--isotonic);fill:none;stroke-width:1.8}
+.contato-info .rl{font-size:12.5px;color:#8ba1ab;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.contato-info .rv{font-size:16px;font-weight:600;margin-top:1px}
+.form{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:36px}
+.form .fg{margin-bottom:20px}
+.form label{display:block;font-size:13.5px;font-weight:600;color:#c4d3dc;margin-bottom:8px}
+.form input,.form textarea{
+  width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.13);
+  border-radius:12px;padding:14px 16px;color:#fff;font-family:inherit;font-size:15px;transition:border-color .25s,background .25s;
+}
+.form input:focus,.form textarea:focus{outline:none;border-color:var(--isotonic);background:rgba(255,255,255,.08)}
+.form input::placeholder,.form textarea::placeholder{color:#7e94a0}
+.form textarea{resize:vertical;min-height:110px}
+.form button{
+  width:100%;background:var(--isotonic);color:var(--midnight);border:none;
+  padding:16px;border-radius:12px;font-family:inherit;font-weight:700;font-size:15.5px;cursor:pointer;
+  transition:transform .25s var(--ease),box-shadow .25s;
+}
+.form button:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(221,255,85,.28)}
+
+/* ---------- FOOTER ---------- */
+footer{background:#001824;color:#fff;padding:60px 0 34px}
+.foot-top{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.09)}
+.foot-brand{max-width:30ch}
+.foot-brand .brand{color:#fff;font-size:24px;margin-bottom:14px}
+.foot-brand p{color:#8ba1ab;font-size:15px;line-height:1.6}
+.foot-cols{display:flex;gap:70px;flex-wrap:wrap}
+.foot-col h4{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:#6f8893;margin-bottom:16px;font-weight:700}
+.foot-col a{display:block;color:#c4d3dc;font-size:15px;margin-bottom:11px;transition:color .2s}
+.foot-col a:hover{color:var(--isotonic)}
+.foot-bot{display:flex;justify-content:space-between;align-items:center;padding-top:26px;flex-wrap:wrap;gap:14px}
+.foot-bot p{color:#6f8893;font-size:13.5px}
+.foot-bot .made{color:#6f8893;font-size:13.5px}
+.foot-bot .made b{color:var(--isotonic)}
+
+/* ---------- RESPONSIVE ---------- */
+@media(max-width:900px){
+  .nav-links{
+    position:fixed;top:69px;left:0;right:0;background:var(--cheviot);
+    flex-direction:column;gap:0;padding:8px 0;border-bottom:1px solid var(--line);
+    transform:translateY(-130%);transition:transform .4s var(--ease);
+  }
+  .nav-links.open{transform:translateY(0)}
+  .nav-links a{padding:16px 32px;width:100%;font-size:16px}
+  .nav-links a::after{display:none}
+  .nav-links .nav-cta{margin:10px 32px;text-align:center}
+  .burger{display:flex}
+  .serv-grid{grid-template-columns:1fr}
+  .sobre-grid{grid-template-columns:1fr;gap:44px}
+  .sobre-visual{max-width:420px;margin:0 auto;width:100%}
+  .contato-grid{grid-template-columns:1fr;gap:48px}
+  .section-pad{padding:80px 0}
+}
+@media(max-width:560px){
+  .wrap{padding:0 22px}
+  .nav{padding:16px 22px}
+  .strip{gap:28px}
+  .strip .item .num{font-size:28px}
+  .hero{padding:140px 0 90px}
+  .card{padding:30px 26px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none}
+  .eyebrow,.hero h1 span,.hero p.lead,.hero-actions,.strip{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="#home" class="brand"><span class="dot"></span>Cadenzia</a>
+  <div class="nav-links" id="navlinks">
+    <a href="#home">Home</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#sobre">Sobre Mim</a>
+    <a href="#contato">Contato</a>
+    <a href="#contato" class="nav-cta">Conhecer serviços</a>
+  </div>
+  <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="home">
+  <div class="hero-glow"></div>
+  <svg class="hero-wave" viewBox="0 0 1440 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" stroke="#11425D" stroke-width="1">
+      <!-- generated lines below by JS for the flowing wave -->
+    </g>
+  </svg>
+  <div class="wrap">
+    <span class="eyebrow"><span class="pulse"></span>Automação para pequenas empresas</span>
+    <h1><span>Liberando tempo</span> <span>para o</span> <span class="accent">extraordinário.</span></h1>
+    <p class="lead">A Cadenzia automatiza a gestão financeira e operacional do seu negócio — receitas, custos, fluxo de caixa e atendimento — para você focar no que só você sabe fazer.</p>
+    <div class="hero-actions">
+      <a href="#servicos" class="btn-primary">Conhecer serviços
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="#contato" class="btn-ghost">Falar com a Cadenzia</a>
+    </div>
+    <div class="strip">
+      <div class="item"><div class="num"><b>+24.8%</b></div><div class="lbl">de eficiência operacional média</div></div>
+      <div class="item"><div class="num">12h<b>/sem</b></div><div class="lbl">economizadas em tarefas manuais</div></div>
+      <div class="item"><div class="num">98.6%</div><div class="lbl">de precisão nos lançamentos</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- SERVIÇOS -->
+<section id="servicos" class="section-pad">
+  <div class="wrap">
+    <div class="serv-head">
+      <div>
+        <div class="sec-eyebrow reveal">O que a Cadenzia faz</div>
+        <h2 class="sec-title reveal">Toda a gestão do seu negócio, em harmonia.</h2>
+      </div>
+      <p class="sec-sub reveal">Cada serviço resolve uma frente da sua operação. Juntos, eles tocam em sincronia — automatizando o repetitivo para liberar o seu tempo.</p>
+    </div>
+    <div class="serv-grid">
+      <article class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <h3>Receitas e recebíveis</h3>
+        <p>Controle automático de tudo que entra: emissão, conciliação e cobrança de recebíveis sem planilhas soltas nem datas esquecidas.</p>
+        <span class="tag">Entradas sob controle</span>
+      </article>
+      <article class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></div>
+        <h3>Gestão de custos</h3>
+        <p>Categorização inteligente das despesas e alertas de desvio, para você enxergar onde o dinheiro vai antes que ele saia.</p>
+        <span class="tag">Despesas claras</span>
+      </article>
+      <article class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-9-9"/><path d="M21 3v6h-6"/><path d="M12 8v4l3 2"/></svg></div>
+        <h3>Fluxo de caixa</h3>
+        <p>Projeção viva do seu saldo nas próximas semanas, atualizada sozinha. Decida com base no futuro, não no extrato de ontem.</p>
+        <span class="tag">Visão de futuro</span>
+      </article>
+      <article class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 4h16v12H7l-3 3V4z"/><path d="M8 9h8M8 12h5"/></svg></div>
+        <h3>Secretária eletrônica</h3>
+        <p>Atendimento e agendamentos automatizados que respondem seus clientes na hora — mesmo quando você está ocupado tocando o negócio.</p>
+        <span class="tag">Sempre disponível</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNATURE BAND -->
+<section class="rhythm">
+  <div class="wrap">
+    <h2>Negócios, como música, dependem de <em>cadência</em>. A Cadenzia mantém o ritmo da sua operação rodando sozinho.</h2>
+    <div class="eq" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre" class="section-pad">
+  <div class="wrap">
+    <div class="sobre-grid">
+      <div class="sobre-visual reveal">
+        <span class="glyph">C</span>
+        <div class="floatcard fc1">
+          <div class="fl">Fluxo de caixa</div>
+          <div class="fv">R$ 48.250 <span class="up">▲ 12%</span></div>
+        </div>
+        <div class="floatcard fc2">
+          <div class="fl">Tarefas automatizadas hoje</div>
+          <div class="fv">37</div>
+        </div>
+      </div>
+      <div class="sobre-text reveal">
+        <div class="sec-eyebrow">Sobre mim</div>
+        <h2>Criei a Cadenzia para que donos de negócio voltem a fazer o que amam.</h2>
+        <p>Vi de perto pequenas empresas incríveis travarem não pela ideia, mas pelo peso da operação: a planilha que não fecha, o boleto esquecido, o cliente sem resposta. Tempo demais no básico, tempo de menos no extraordinário.</p>
+        <p>A Cadenzia nasceu para inverter isso. Uno tecnologia de automação a um olhar próximo de cada negócio, montando uma operação financeira que roda sozinha — com precisão, clareza e o seu tempo de volta.</p>
+        <div class="values">
+          <span class="v"><i></i>Precisão</span>
+          <span class="v"><i></i>Clareza</span>
+          <span class="v"><i></i>Proximidade</span>
+        </div>
+        <div class="sig">— Fundador, Cadenzia
+          <small>Automação de gestão para pequenas empresas</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato" class="section-pad">
+  <svg class="contato-wave" viewBox="0 0 1440 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" id="contatoWave"></svg>
+  <div class="wrap">
+    <div class="contato-grid">
+      <div class="contato-left reveal">
+        <h2>Vamos liberar o seu <span class="accent">tempo?</span></h2>
+        <p>Conte um pouco sobre o seu negócio. Respondo para entender sua operação e mostrar quais serviços fazem mais sentido para você.</p>
+        <div class="contato-info">
+          <div class="row">
+            <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 6l8 6 8-6"/></svg></div>
+            <div><div class="rl">E-mail</div><div class="rv">contato@cadenzia.com.br</div></div>
+          </div>
+          <div class="row">
+            <div class="ico"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-3 2a14 14 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></div>
+            <div><div class="rl">WhatsApp</div><div class="rv">(00) 00000-0000</div></div>
+          </div>
+          <div class="row">
+            <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 22s7-6 7-12a7 7 0 1 0-14 0c0 6 7 12 7 12z"/></svg></div>
+            <div><div class="rl">Atendimento</div><div class="rv">100% remoto, todo o Brasil</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="form reveal">
+        <div class="fg"><label>Nome</label><input type="text" placeholder="Seu nome"></div>
+        <div class="fg"><label>E-mail</label><input type="email" placeholder="voce@empresa.com.br"></div>
+        <div class="fg"><label>Sua empresa</label><input type="text" placeholder="Nome do negócio"></div>
+        <div class="fg"><label>Como posso ajudar?</label><textarea placeholder="Conte o que mais consome o seu tempo hoje..."></textarea></div>
+        <button type="button" onclick="this.textContent='Mensagem pronta para enviar ✓'">Enviar mensagem</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <div class="brand"><span class="dot"></span>Cadenzia</div>
+        <p>Liberando tempo para o extraordinário. Automação de gestão para pequenas empresas que querem crescer sem se perder na operação.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h4>Navegação</h4>
+          <a href="#home">Home</a>
+          <a href="#servicos">Serviços</a>
+          <a href="#sobre">Sobre Mim</a>
+          <a href="#contato">Contato</a>
+        </div>
+        <div class="foot-col">
+          <h4>Serviços</h4>
+          <a href="#servicos">Receitas e recebíveis</a>
+          <a href="#servicos">Gestão de custos</a>
+          <a href="#servicos">Fluxo de caixa</a>
+          <a href="#servicos">Secretária eletrônica</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <p>© 2026 Cadenzia. Todos os direitos reservados.</p>
+      <p class="made">Identidade <b>·</b> precisão <b>·</b> clareza</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// nav scroll state
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>20));
+
+// mobile menu
+const burger=document.getElementById('burger'),links=document.getElementById('navlinks');
+burger.addEventListener('click',()=>links.classList.toggle('open'));
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+
+// scroll reveal
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4*0.08)+'s';io.observe(el)});
+
+// flowing wave generator (hero + contato) — echoes the brand panel's contour lines
+function buildWave(svg,count,w,h,color){
+  const ns="http://www.w3.org/2000/svg";const g=document.createElementNS(ns,'g');
+  g.setAttribute('fill','none');g.setAttribute('stroke',color);g.setAttribute('stroke-width','1');
+  for(let i=0;i<count;i++){
+    const p=document.createElementNS(ns,'path');
+    const off=i*(h*0.9/count)+h*0.18;const amp=60+i*4;
+    let d=`M ${w} ${off}`;
+    for(let x=w;x>=w*0.35;x-=40){
+      const y=off+Math.sin((x/w)*Math.PI*2 + i*0.35)*amp*((x-w*0.35)/(w*0.65));
+      d+=` L ${x} ${y.toFixed(1)}`;
+    }
+    p.setAttribute('d',d);p.setAttribute('opacity',(0.25+i*0.012).toFixed(2));
+    g.appendChild(p);
+  }
+  svg.appendChild(g);
+}
+buildWave(document.querySelector('.hero-wave'),26,1440,700,'#1d5a7e');
+buildWave(document.getElementById('contatoWave'),22,1440,600,'#1d5a7e');
+</script>
+</body>
+</html>
